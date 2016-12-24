@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.genius.com.http.HttpParams;
 import net.genius.com.http.VeryOkHttp;
@@ -17,9 +18,6 @@ import org.json.JSONObject;
 import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, VeryOkHttp.OnResponseListener {
-
-
-
 
     public static final String URL_GET = "http://apis.juhe.cn/mobile/get?phone=13812345678&key=daf8fa858c330b22e342c882bcbac622";
     public final int GET_CODE = 0;
@@ -110,11 +108,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject obj = new JSONObject(response);
                     obj = obj.getJSONObject("result");
                     success.setText(obj.getString("province"));
+                    test();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
         }
+    }
+
+    private void test() {
+
+        veryOkHttp.post(URL_POST, getParams(), 3, new VeryOkHttp.OnResponseListener() {
+            @Override
+            public void onSuccess(String response, int id) {
+                Toast.makeText(MainActivity.this,"错误了",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+        });
     }
 
     @Override
