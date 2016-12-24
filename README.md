@@ -7,7 +7,7 @@
 
   maven{ url 'https://jitpack.io'}
  
-  ![image](https://github.com/luziming/VeryOkHttp/images/maven.png)
+  ![image](https://github.com/luziming/VeryOkHttp/raw/master/images/maven.png)
   
 2.添加依赖
 
@@ -36,7 +36,7 @@ OkHttpClient okHttpClient = new OkHttpClient.Builder()
  veryOkHttp.get(URL_GET,params,GET_CODE,this);
  
  
- //监听
+ #监听
  @Override
     public void onSuccess(String response, int id) {
         switch (id) {
