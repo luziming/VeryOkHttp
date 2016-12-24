@@ -1,9 +1,11 @@
 package net.genius.com.http;
 
+import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
 import com.zhy.http.okhttp.builder.OtherRequestBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
+import com.zhy.http.okhttp.builder.PostStringBuilder;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.MediaType;
 
 /*
                    _ooOoo_
@@ -35,12 +38,26 @@ import okhttp3.Call;
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
          佛祖保佑       永无BUG
 */
-public class VeryOkHttp {
+public class VeryOkHttp extends StringCallback {
 
     private Object obj;
 
     public VeryOkHttp(Object obj) {
         this.obj = obj;
+    }
+
+    @Override
+    public void onError(Call call, Exception e, int id) {
+        for (OnResponseListener mOnResponseListener : listenerList) {
+            mOnResponseListener.onError(call, e, id);
+        }
+    }
+
+    @Override
+    public void onResponse(String response, int id) {
+        for (OnResponseListener mOnResponseListener : listenerList) {
+            mOnResponseListener.onSuccess(response, id);
+        }
     }
 
     public interface OnResponseListener {
@@ -75,21 +92,7 @@ public class VeryOkHttp {
                 builder.addHeader(next.getKey(), next.getValue());
             }
         }
-        builder.id(id).tag(obj).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onError(call, e, id);
-                }
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onSuccess(response, id);
-                }
-            }
-        });
+        builder.id(id).tag(obj).build().execute(this);
     }
 
     /**
@@ -115,21 +118,7 @@ public class VeryOkHttp {
                 builder.addHeader(next.getKey(), next.getValue());
             }
         }
-        builder.id(id).tag(obj).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onError(call, e, id);
-                }
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onSuccess(response, id);
-                }
-            }
-        });
+        builder.id(id).tag(obj).build().execute(this);
     }
 
     /**
@@ -141,7 +130,6 @@ public class VeryOkHttp {
             listenerList.add(listener);
         }
         OtherRequestBuilder builder = OkHttpUtils.delete().url(url);
-        Map<String, String> paramsMap = null;//默认为null
         Map<String, String> headersMap = Collections.EMPTY_MAP;
         if (params != null) {
             headersMap = params.getHeaders();
@@ -150,21 +138,36 @@ public class VeryOkHttp {
                 builder.addHeader(next.getKey(), next.getValue());
             }
         }
-        builder.id(id).tag(obj).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onError(call, e, id);
-                }
-            }
 
-            @Override
-            public void onResponse(String response, int id) {
-                for (OnResponseListener mOnResponseListener : listenerList) {
-                    mOnResponseListener.onSuccess(response, id);
-                }
+        builder.id(id).tag(obj).build().execute(this);
+    }
+
+    /**
+     * Json请求
+     */
+    public <T> void  postJson(String url, HttpParams params, int id, T t, OnResponseListener listener) {
+        //添加一个监听器
+        if (!listenerList.contains(listener)) {
+            listenerList.add(listener);
+        }
+        PostStringBuilder builder = OkHttpUtils
+                .postString()
+                .url(url);
+        //添加http头
+        Map<String, String> headersMap = Collections.EMPTY_MAP;
+        if (params != null) {
+            headersMap = params.getHeaders();
+            if (headersMap.size() == 1) {
+                Map.Entry<String, String> next = headersMap.entrySet().iterator().next();
+                builder.addHeader(next.getKey(), next.getValue());
             }
-        });
+        }
+        builder.content(new Gson().toJson(t))
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .id(id)
+                .tag(obj)
+                .build()
+                .execute(this);
     }
     /**
      * 取消被obj标记的所有请求
