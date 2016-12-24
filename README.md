@@ -5,7 +5,7 @@
 * 首先要感谢这位大神的OkHttp  >>JakeWharton：https://github.com/square/okhttp
 * 其次是鸿神的OkHttpUtils     >>https://github.com/hongyangAndroid/okhttputils
 * 目前对应的OkHttp版本3.3.1,OkHttpUtils的版本2.6.2
-* 大神封装的已经很好了,不过还是感觉挺繁琐的,简单的封装一下,可以一行代码请求网络,何乐而不为?
+* 代码写的不好,只是自己用用,还有很多不严谨的地方,仅供学习与交流
 
 # 使用方法
 1.在root project的build.gradle中添加中央仓库
