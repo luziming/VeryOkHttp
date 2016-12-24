@@ -18,6 +18,9 @@
 
   compile 'com.github.luziming:VeryOkHttp:v1.0.1'
   
+  ![image](https://github.com/luziming/VeryOkHttp/raw/master/images/compile.png)
+  
+  
 # 在Application中初始化
 
  
