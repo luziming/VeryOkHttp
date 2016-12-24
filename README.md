@@ -47,11 +47,11 @@
 # postJson请求
     
     
-     HttpParams params = new HttpParams();
-     params.addHeader(token);
-     //通过Gson将been对象转换为Json请求
-     UserParams userParams = new UserParams(new UserParams.UserBean(name,desc,""));
-     veryOkHttp.postJson(API.ADD_PRODUCTS_URL,params, API.ADD_PRODUCTS_CODE,userParams,this);
+         HttpParams params = new HttpParams();
+         params.addHeader(token);
+         //通过Gson将been对象转换为Json请求
+         UserParams userParams = new UserParams(new UserParams.UserBean(name,desc,""));
+         veryOkHttp.postJson(API.ADD_PRODUCTS_URL,params, API.ADD_PRODUCTS_CODE,userParams,this);
      
 # 其他请求方式delete/patch,用法大致相同
  
@@ -79,7 +79,7 @@
     
     
     
-  #取消请求
+  # 取消请求
   
       @Override
         protected void onDestroy() {
