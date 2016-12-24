@@ -6,6 +6,8 @@
 1.在root project的build.gradle中添加中央仓库
 
   maven{ url 'https://jitpack.io'}
+ 
+  ![image](https://github.com/luziming/VeryOkHttp/images/maven.png)
   
 2.添加依赖
 
