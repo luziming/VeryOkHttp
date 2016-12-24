@@ -98,9 +98,7 @@ public class HttpParams {
         return mParams;
     }
 
-    public void addHeader(String value) {
-        Map<String,String> headers = new HashMap();
-        headers.put("Authorization", value);
+    public void addHeader(Map<String,String> headers) {
         mHeaders = headers;
     }
 
