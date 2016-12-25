@@ -1,11 +1,11 @@
 # VeryOkHttp
 凯哥巅峰之作/业界良心,一度被葬爱家族称作超越OkHttp的存在~
 
-* 所谓前人栽树,后人乘凉。
-* 首先要感谢这位大神的OkHttp  >>JakeWharton：https://github.com/square/okhttp
-* 其次是鸿神的OkHttpUtils     >>https://github.com/hongyangAndroid/okhttputils
+* 对OkHttpUtils进行了简单包装,访问网络更加简单,OkHttpUtils地址   >>https://github.com/hongyangAndroid/okhttputils
 * 目前对应的OkHttp版本3.3.1,OkHttpUtils的版本2.6.2
-* 代码写的不好,只是自己用用,还有很多不严谨的地方,仅供学习与交流
+* 一直在发现问题解决问题,还有很多不严谨的地方,仅供学习与交流
+* 给个start鼓励一下吧
+
 
 # 使用方法
 1.在root project的build.gradle中添加中央仓库
