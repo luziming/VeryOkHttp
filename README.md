@@ -16,7 +16,7 @@
   
 2.添加依赖
 
-  compile 'com.github.luziming:VeryOkHttp:v1.0.1'
+  compile 'com.github.luziming:VeryOkHttp:v1.0.2'
   
   ![image](https://github.com/luziming/VeryOkHttp/raw/master/images/compile.png)
   
